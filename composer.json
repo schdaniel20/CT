@@ -1,0 +1,11 @@
+{
+    "name": "CT",
+    "version": "dev-master",
+    "require": {
+        "php": ">=7.0.0",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-4": {"UOradea\\": "src/UOradea"}
+    }
+}
