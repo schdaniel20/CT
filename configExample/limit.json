@@ -1,0 +1,31 @@
+{
+    "program" : "Test",
+    "vars" : {"baseUrl" : "http://localhost:8000/testing.php?limit=10",
+               "i" : 1
+                },
+    "run" :
+    [{   
+        "step" : "loop",
+        "settings" : {
+            "var" : "i",
+            "start" : 1,
+            "end" : 1100000,
+            "inc" : 100000                
+        },
+        "children" :   [
+            {
+                "step" : "curl",
+                "settings" : {
+                    "method" : "GET",
+                    "url" : "http://localhost:8000/testing.php?limit={i}",
+                    "param" : "value",
+                    "header" : {"CURLOPT_USERAGENT" : "Mozilla/5.0 (X11; Linux x86_64; rv:41.0"},
+                    "timeout" : 5,
+                    "maxRequests" : 10,
+                    "output" : "page",
+                    "debug" : true
+                }
+            }
+        ]
+    }]  
+}
