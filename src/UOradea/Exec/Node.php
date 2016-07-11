@@ -46,7 +46,7 @@ class Node {
     
     public function removeChild(self $node) : self {
         if ($node->parentNode !== $this) {
-            throw new Exception("Nu poci!");
+            throw new Exception("Can't!");
         }
         
         $prev = $node->previousSibling;
@@ -73,7 +73,7 @@ class Node {
     
     public function insertBefore(self $node, self $ref) : self {
         if ($ref->parentNode !== $this) {
-            throw new Exception("Nu poci!");
+            throw new Exception("Can't!");
         }
         
         $node->parentNode = $this;
@@ -92,7 +92,7 @@ class Node {
     
     public function insertAfter(self $node, self $ref) : self {
         if ($ref->parentNode !== $this) {
-            throw new Exception("Nu poci!");
+           throw new Exception("Can't!");
         }
         
         if ($ref === $this->lastChild) {

@@ -8,11 +8,7 @@ use UOradea\Exec\Task\Loop;
 use UOradea\Exec\Task\LoopInput;
 use UOradea\Exec\Task\Curl;
 use UOradea\Exec\Task\DOMExtract;
-
-//p1. titlu
-//p2. scopul lucrari
-//p3. parti scrise ; doar esetiale, prezentarea tehnici; aplicatie; partile cheie
-
+use UOradea\Exec\Helper;
 
 require_once 'vendor/autoload.php';
 
@@ -27,7 +23,14 @@ $reg = [
     'extract' => DOMExtract::class,
 ];
 
-$conf = json_decode(file_get_contents('configExample/limit.json'), true);
+$args = Helper::getArgumentMap($argv);
 
-$p = new Program($reg, $conf);
-$p->run();
+if(!empty($args)) {
+    $conf = Helper::getJsonFileToArray($args['-f']);
+    $program = new Program($reg, $conf);
+    $program->run();
+}
+else {
+    throw new Exception("Can't find the -f argument that points to the configFile!");
+}
+
