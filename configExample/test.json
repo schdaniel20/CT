@@ -1,0 +1,63 @@
+{
+    "program" : "Test",
+    "vars" : {"baseUrl" : "http://localhost:8000/testing.php",
+               "i" : 1,
+               "input" : [
+                {
+                    "value":"____"
+                },
+                {
+                    "value":"A___"
+                },
+                {
+                    "value":"B___"
+                },
+                {
+                    "value":".___"
+                }
+               ]
+                },
+    "run" :
+    [{   
+        "step" : "loopInput",
+        "settings" :  {
+            "var" : "i",
+            "start" : 0,
+            "end" : {"function" : "count", "var" : "input"},                
+            "inc" : 1,
+            "input" : "input",
+            "name" : "in"
+        },
+        "children" :   [
+            {
+                "step" : "curl",
+                "settings" : {
+                    "method" : "GET",
+                    "url" : "http://businessdirectorycanada.net/eng/search/all?p=1&what={in.value}&where=",
+                    "param" : "value",
+                    "header" : {"CURLOPT_USERAGENT" : "Mozilla/5.0 (X11; Linux x86_64; rv:41.0"},
+                    "timeout" : 5,
+                    "maxRequests" : 10,
+                    "output" : "page",
+                    "debug" : true
+                }
+            },
+            {
+              "step" : "extract",
+              "settings" : {
+                "xpath":"//div[contains(@class,'number_found')]/strong[1]",
+                "function":"find",
+                "source":"page",
+                "output":"found",
+                "type":"text"
+              }
+            },
+            {
+                "step" : "echo",
+                "settings" : {
+                  "text":"Am gasit: $found\n"
+              } 
+            }
+        ]
+    }]  
+}
